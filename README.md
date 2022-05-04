@@ -5,6 +5,10 @@ Already Set to use Notes just need to add a link, or method of noting note sourc
 Built with SHA256 Hashing on Passwords to keep Database secure, working on encryption of all data in database
 Built with very basic auditing on actions.
 
+# Releases
+v0.1.0.0 Alpha Release - Include Login, and Patient Registration. See release Directions to use. NOT FOR PRODUCTION USE
+(Click Here)[https://github.com/xdnewlun1/PatientRegistration/releases/tag/alpha] for The Alpha 0.1.0.0 Release
+
 # TODO
 1. Implement Patient Managment
     a. Implement Deleting Patient
