@@ -1,0 +1,3 @@
+This code is dependant on Apache Commons Lang 3, and Codex.
+This code is dependant on the jdbc connector for Java + MySQL
+This code uses the SHA library from mkyong
