@@ -28,14 +28,8 @@ public class Patient {
         this.phone = phone;
         this.dob = dob;
     }
-
-    public void printPatient(){
-        System.out.println("Name: " + fname + " " + lname);
-        System.out.println("Phone: " + phone);
-        System.out.println("Email: " + email);
-        System.out.println("Date of Birth: " + dob);
-        System.out.println("Insurance: " + ins.getName());
-        System.out.println("SSN: " + ssn);
-        System.out.println("Admin Operator ID: " + operator_creator);
-    }
+    public String getFname(){ return fname; }
+    public String getLname(){ return lname; }
+    public String getEmail(){ return email; }
+    public String getPhone(){ return phone; }
 }

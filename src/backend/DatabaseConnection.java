@@ -21,7 +21,6 @@ public class DatabaseConnection {
         PreparedStatement auth;
         try {
             auth = conn.prepareStatement("select admin_id, first_name, last_name FROM administration WHERE username = ? and password_hash = ?");
-            conn.close();
             auth.setString(1, usernameAuth);
             auth.setString(2,sha256);
             ResultSet result = auth.executeQuery();
@@ -30,6 +29,7 @@ public class DatabaseConnection {
                 resultObj.login(result.getInt(1), result.getString(2), result.getString(3));
                 return resultObj;
             }else {
+                conn.close();
                 return new Admin();
             }
         } catch (SQLException e) {
@@ -74,6 +74,34 @@ public class DatabaseConnection {
             throw new RuntimeException(e);
         }
         return ins;
+    }
+
+    public boolean saveNewPatient(Patient pat, Admin admin){
+        PreparedStatement saveNewPat;
+        try{
+            saveNewPat = conn.prepareStatement("INSERT INTO patients(first_name, last_name, date_of_birth, phone, email, ssn, admin_creator, balance) VALUES (?,?,?,?,?,?,?,?);");
+            saveNewPat.setString(1, pat.getFname());
+            saveNewPat.setString(2, pat.getLname());
+            saveNewPat.setDate(3, new java.sql.Date(pat.dob.getTime()));
+            saveNewPat.setString(4, pat.getPhone());
+            saveNewPat.setString(5, pat.getEmail());
+            saveNewPat.setString(6, pat.getSSN());
+            saveNewPat.setInt(7, admin.admin_id);
+            saveNewPat.setInt(8, 0);
+            int rs = saveNewPat.executeUpdate();
+            System.out.println("Successful!");
+            conn.close();
+            if(rs == 1){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch(SQLException e){
+            System.out.println("SQL ISSUE");
+            e.printStackTrace();
+        }
+        return false;
     }
 
 

@@ -163,7 +163,6 @@ public class PatientReg {
         //Email Event Handler to Ensure Correct Email
         emailTF.addFocusListener(new FocusListener() {
             public void focusGained(FocusEvent e) {
-                System.out.println("email fg");
             }
 
             public void focusLost(FocusEvent e) {
@@ -244,9 +243,38 @@ public class PatientReg {
                 Date confDOB = returnDate(dob.getText());
                 if (notEmpty(fnameTF) && notEmpty(lnameTF) && notEmpty(emailTF) && emailWarnL.getText().equals("") && newPat.ssnExists() && !phone.equals("") && confDOB != null && newPat.getInsurance() != null) {
                     newPat.setAttr(fnameTF.getText(), lnameTF.getText(), emailTF.getText(), phone, confDOB);
-                    newPat.printPatient();
+                    newPat.setSSN(cleanString(newPat.getSSN()));
+                    DatabaseConnection conn = new DatabaseConnection();
+                    boolean successful = conn.saveNewPatient(newPat, admin);
+                    JLabel errorSubmit = new JLabel("Error Submitting! Contact an Administrator");
+                    if(successful){
+                        errorSubmit.setText("");
+                        //Add successful JLabel
+                        JLabel successfulSubmit = new JLabel("Saved Successfully! Press Clear to start another");
+                        successfulSubmit.setBounds(200, 450, 350, 25);
+                        reg.add(successfulSubmit);
+                        JButton clear = new JButton("Clear");
+                        clear.setBounds(200,475,325,25);
+                        reg.add(clear);
+                        reg.revalidate();
+                        reg.repaint();
+
+                        clear.addActionListener(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                reg.dispose();
+                                try {
+                                    setupJFrame();
+                                } catch (ParseException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        });
+                    }else{
+                        //Add invalid JLabel
+                        errorSubmit.setBounds(200, 450, 200, 25);
+                        reg.add(errorSubmit);
+                    }
                 } else {
-                    System.out.println("Failed");
                     notFilledError.setText("<html><font color='red'>Not All Fields Filled</font></html>");
                     reg.revalidate();
                     reg.repaint();
@@ -322,7 +350,6 @@ public class PatientReg {
 
         //JList Init
         for (int i = (0); i < ins.size(); i++) {
-            System.out.println(i);
             selectInsur.add(new JButton(ins.get(i).getName()));
             selectInsur.get((i)).setBounds(100, (250 + 50 * (i)), 250, 25);
             selectInsurIdent.add(new JLabel(""));
