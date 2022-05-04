@@ -7,7 +7,7 @@ Built with very basic auditing on actions.
 
 # Releases
 v0.1.0.0 Alpha Release - Include Login, and Patient Registration. See release Directions to use. NOT FOR PRODUCTION USE
-(Click Here)[https://github.com/xdnewlun1/PatientRegistration/releases/tag/alpha] for The Alpha 0.1.0.0 Release
+[Click Here](https://github.com/xdnewlun1/PatientRegistration/releases/tag/alpha) for The Alpha 0.1.0.0 Release
 
 # TODO
 1. Implement Patient Managment
